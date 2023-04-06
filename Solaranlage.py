@@ -26,7 +26,7 @@ def website():
 
 
 def influxdb(power_output):
-    power_output = power_output
+    power_output = float(power_output)
     field = 'watt'
     client = InfluxDBClient(host=INFLUXDB_IP, port=INFLUXDB_PORT)
     client.switch_database(INFLUXDB_DATABASE_NAME)
