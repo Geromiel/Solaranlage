@@ -5,6 +5,6 @@ database = dict(
 )
 solarpanel = dict(
     SOLARPANEL_IP='###',
-    USERNAME_DEYE='###',
-    PASSWORD_DEYE='###'
+    DEYE_USERNAME='###',
+    DEYE_PASSWORD='###'
 )
