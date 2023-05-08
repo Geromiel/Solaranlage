@@ -1,6 +1,8 @@
 import requests
 import re
 from influxdb import InfluxDBClient
+import sys
+sys.path.insert(0, '/home/pi/')
 import config
 
 PATTERN = r'var webdata_now_p = "(.*?)";'
@@ -9,7 +11,7 @@ DEYE_USERNAME = config.solarpanel['DEYE_USERNAME']
 DEYE_PASSWORD = config.solarpanel['DEYE_PASSWORD']
 INFLUXDB_IP = config.database['INFLUXDB_IP']
 INFLUXDB_PORT = config.database['INFLUXDB_PORT']
-INFLUXDB_DATABASE_NAME = config.database['INFLUXDB_DATABASE_NAME']
+INFLUXDB_DATABASE_NAME = config.database['INFLUXDB_DATABASE_NAME_SOLAR']
 
 
 def website():
@@ -27,14 +29,13 @@ def website():
 
 def influxdb(power_output):
     power_output = float(power_output)
-    field = 'watt'
     client = InfluxDBClient(host=INFLUXDB_IP, port=INFLUXDB_PORT)
     client.switch_database(INFLUXDB_DATABASE_NAME)
 
     data_point = [
         {
             'measurement': 'PowerOutput',
-            'fields': {field: power_output}
+            'fields': {'watt': power_output}
         }
     ]
     client.write_points(data_point)
